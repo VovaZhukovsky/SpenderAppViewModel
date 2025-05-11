@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - '*.*.*'  # Запуск при пуше тега версии, например v1.0.0
+      - '*.*.*'
 
 jobs:
   build-and-publish:
@@ -24,4 +24,4 @@ jobs:
       - name: Pack NuGet package
         run: dotnet pack --configuration Release --no-build --output ./nupkg
       - name: Publish NuGet package
-        run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget add source --username VovaZhukovsky --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VovaZhukovsky/index.json"
